@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\AboutView;
 use App\Models\HeroView;
 use App\Models\MakeService;
 use Illuminate\Support\Facades\DB;
@@ -22,7 +23,7 @@ class WhatwedoService
     {
         $updateService = MakeService::where("id", $serviceID)->update([
             "title" => $title,
-            "description" => $description
+            "description" => $description,
         ]);
 
         return $updateService;
@@ -41,6 +42,8 @@ class WhatwedoService
 
         $listHomeSection = HeroView::all();
 
+        $listAboutSsection = AboutView::all();
+
         $uploadedHomeSections = $listHomeSection->map(function ($listHomeSection) {
             return [
                 "id" => $listHomeSection->id,
@@ -50,10 +53,28 @@ class WhatwedoService
             ];
         });
 
+        $uploadAboutSection = $listAboutSsection->map(function ($listAboutSsection) {
+            return [
+                "id" => $listAboutSsection->id,
+                "title" => $listAboutSsection->title,
+                "body" => $listAboutSsection->body,
+                "image_path" => env('APP_URL') . '/' . 'storage/' . $listAboutSsection->image_path,
+            ];
+        });
+
         return [
             "services" => $listService,
             "heroTitle" => $uploadedHomeSections[0]["title"],
-            "heroBody" => $uploadedHomeSections[0]["body"]
+            "heroBody" => $uploadedHomeSections[0]["body"],
+            "image_path" => $uploadedHomeSections[0]["image_path"],
+            "aboutTitle" => $uploadAboutSection[0]["title"],
+            "aboutBody" => $uploadAboutSection[0]["body"],
+            "aboutImagePath" => $uploadAboutSection[0]["image_path"],
         ];
+    }
+
+    public function createClientsTrustedus()
+    {
+        
     }
 }
