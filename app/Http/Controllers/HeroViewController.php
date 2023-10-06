@@ -51,4 +51,31 @@ class HeroViewController extends Controller
             ], $statusCode);
         }
     }
+
+    public function updateHeroView(CreateHomeSectionRequest $request, $id)
+    {
+        try {
+            $file = $request->file('image_path');
+            if ($file) {
+
+                $namefile = $file->getClientOriginalName();
+
+                $file->storeAs('public', $namefile);
+
+                $this->service->updateHeroView($request->title, $request->body, $namefile, $id);
+
+            } else {
+
+                return response()->json(["failed to upload file image and description, please try again"]);
+            }
+
+            return response()->json(["Hero Section Updated Successfully"]);
+        } catch (\Exception $e) {
+            [$message, $statusCode, $exceptionCode] = getHttpMessageAndStatusCodeFromException($e);
+
+            return response()->json([
+                "message" => $message,
+            ], $statusCode);
+        }
+    }
 }
