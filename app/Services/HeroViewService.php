@@ -17,6 +17,17 @@ class HeroViewService
         return $createHero;
     }
 
+    public function updateHeroView(string $title, string $body, string $nameFile, int $id)
+    {
+        $updateHero = HeroView::where('id', $id)->update([
+            "title" => $title,
+            "body" => $body,
+            "image_path" => $nameFile,
+        ]);
+
+        return $updateHero;
+    }
+
     public function listHomeSection()
     {
         $listHomeSection = HeroView::all();
