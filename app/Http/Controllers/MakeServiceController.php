@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\WhatwedoServiceRequest;
 use App\Services\WhatwedoService;
+use Illuminate\Http\Request;
 
 class MakeServiceController extends Controller
 {
@@ -61,6 +62,33 @@ class MakeServiceController extends Controller
             $result = $this->service->listServices();
 
             return response()->json($result);
+        } catch (\Exception $e) {
+            [$message, $statusCode, $exceptionCode] = getHttpMessageAndStatusCodeFromException($e);
+
+            return response()->json([
+                "message" => $message,
+            ], $statusCode);
+        }
+    }
+
+    public function createClientsTruestedus(Request $request)
+    {
+        try {
+            $request->validate([
+                "image_path" => 'required|image|mimes:jpeg,png,jpg,gif',
+            ]);
+
+            $file = $request->file('image_path');
+            if ($file) {
+                $name = $file->getClientOriginalName();
+                $file->storeAs('public', $name);
+
+                $this->service->createClientsTrustedus($name);
+
+                return response()->json(["Client Trusted us Logo Created successfully"]);
+            } else {
+                return response()->json(["failed to upload portfolio file image and description, please try again"]);
+            }
         } catch (\Exception $e) {
             [$message, $statusCode, $exceptionCode] = getHttpMessageAndStatusCodeFromException($e);
 
