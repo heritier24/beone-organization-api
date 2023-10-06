@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\AboutView;
+use App\Models\ClientsTrustedUs;
 use App\Models\HeroView;
 use App\Models\MakeService;
 use Illuminate\Support\Facades\DB;
@@ -73,8 +74,12 @@ class WhatwedoService
         ];
     }
 
-    public function createClientsTrustedus()
+    public function createClientsTrustedus(string $namePath)
     {
+        $createClientsTrustedUs = ClientsTrustedUs::create([
+            "image_path" => $namePath
+        ]); 
         
+        return $createClientsTrustedUs;
     }
 }
