@@ -85,10 +85,26 @@ class MakeServiceController extends Controller
 
                 $this->service->createClientsTrustedus($name);
 
-                return response()->json(["Client Trusted us Logo Created successfully"]);
             } else {
                 return response()->json(["failed to upload portfolio file image and description, please try again"]);
             }
+
+            return response()->json(["Client Trusted us Logo Created successfully"]);
+        } catch (\Exception $e) {
+            [$message, $statusCode, $exceptionCode] = getHttpMessageAndStatusCodeFromException($e);
+
+            return response()->json([
+                "message" => $message,
+            ], $statusCode);
+        }
+    }
+
+    public function listClientsTruestedus()
+    {
+        try {
+            $result = $this->service->listClientsTruested();
+
+            return response()->json($result);
         } catch (\Exception $e) {
             [$message, $statusCode, $exceptionCode] = getHttpMessageAndStatusCodeFromException($e);
 
