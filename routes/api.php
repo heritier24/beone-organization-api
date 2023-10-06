@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AboutControlller;
 use App\Http\Controllers\HeroViewController;
 use App\Http\Controllers\MakeServiceController;
 use Illuminate\Http\Request;
@@ -24,6 +25,8 @@ Route::get("/hero-view", [HeroViewController::class, "indexAction"]);
 
 Route::post("/create-hero-view", [HeroViewController::class, "createHeroView"]);
 
+Route::post("/update-hero-view/{id}", [HeroViewController::class, "updateHeroView"]);
+
 Route::post("/create-service", [MakeServiceController::class, "createService"]);
 
 Route::post("/update-service/{serviceID}", [MakeServiceController::class, "updateService"])->whereNumber('serviceID');
@@ -31,3 +34,11 @@ Route::post("/update-service/{serviceID}", [MakeServiceController::class, "updat
 Route::delete("/delete-service/{serviceID}", [MakeServiceController::class, "deleteService"]);
 
 Route::get("/list-services", [MakeServiceController::class, "listServices"]);
+
+Route::get("/list-about", [AboutControlller::class, "listAboutSection"]);
+
+Route::post("create-about", [AboutControlller::class, "createAboutSection"]);
+
+Route::post("update-about/{id}", [AboutControlller::class, "updateAboutSection"]);
+
+Route::post("/create-clients-trustedus", [MakeServiceController::class, "createClientsTruestedus"]);
