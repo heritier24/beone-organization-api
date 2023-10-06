@@ -63,6 +63,15 @@ class WhatwedoService
             ];
         });
 
+        $listClientsTrustedUs = ClientsTrustedUs::all();
+
+        $uploadedClientssSections = $listClientsTrustedUs->map(function ($listClientsTrustedUs) {
+            return [
+                "logoID" => $listClientsTrustedUs->id,
+                "imagePathLogo" => env('APP_URL') . '/' . 'storage/' . $listClientsTrustedUs->image_path,
+            ];
+        });
+
         return [
             "services" => $listService,
             "heroTitle" => $uploadedHomeSections[0]["title"],
@@ -71,6 +80,7 @@ class WhatwedoService
             "aboutTitle" => $uploadAboutSection[0]["title"],
             "aboutBody" => $uploadAboutSection[0]["body"],
             "aboutImagePath" => $uploadAboutSection[0]["image_path"],
+            'clientsTrustedUs' => $uploadedClientssSections
         ];
     }
 
@@ -81,5 +91,19 @@ class WhatwedoService
         ]); 
         
         return $createClientsTrustedUs;
+    }
+
+    public function listClientsTruested()
+    {
+        $listClientsTrustedUs = ClientsTrustedUs::all();
+
+        $uploadedHomeSections = $listClientsTrustedUs->map(function ($listClientsTrustedUs) {
+            return [
+                "logoID" => $listClientsTrustedUs->id,
+                "imagePathLogo" => env('APP_URL') . '/' . 'storage/' . $listClientsTrustedUs->image_path,
+            ];
+        });
+
+        return $uploadedHomeSections;
     }
 }
