@@ -27,7 +27,7 @@ class CreateHomeSectionRequest extends FormRequest
         return [
             "title" => "required|string",
             "body" => "required|string",
-            "image_path" => "required|image|mimes:jpeg,png,jpg,gif",
+            "image_path" => "required|image|mimes:jpeg,png,jpg,gif,svg",
         ];
     }
 
