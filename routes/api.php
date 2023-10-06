@@ -42,3 +42,5 @@ Route::post("create-about", [AboutControlller::class, "createAboutSection"]);
 Route::post("update-about/{id}", [AboutControlller::class, "updateAboutSection"]);
 
 Route::post("/create-clients-trustedus", [MakeServiceController::class, "createClientsTruestedus"]);
+
+Route::get("/list-clients-trustedus", [MakeServiceController::class, "listClientsTruestedus"]);
