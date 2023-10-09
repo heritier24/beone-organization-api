@@ -113,4 +113,19 @@ class MakeServiceController extends Controller
             ], $statusCode);
         }
     }
+
+    public function removeClientsTruestedus(int $logoID)
+    {
+        try {
+            $this->service->removeClientsTruestedus($logoID);
+
+            return response()->json(["clients trusted us Logo removed successfully"]);
+        } catch (\Exception $e) {
+            [$message, $statusCode, $exceptionCode] = getHttpMessageAndStatusCodeFromException($e);
+
+            return response()->json([
+                "message" => $message,
+            ], $statusCode);
+        }
+    }
 }
