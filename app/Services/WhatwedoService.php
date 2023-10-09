@@ -6,6 +6,7 @@ use App\Models\AboutView;
 use App\Models\ClientsTrustedUs;
 use App\Models\HeroView;
 use App\Models\MakeService;
+use App\Models\Teams;
 use App\Models\Testimonials;
 use Illuminate\Support\Facades\DB;
 
@@ -85,6 +86,21 @@ class WhatwedoService
             ];
         });
 
+        $listTeams = Teams::all();
+
+        $uploadTeamsSection = $listTeams->map(function ($listTeams) {
+            return [
+                "teamID" => $listTeams->id,
+                "teamTitle" => $listTeams->teamTitle,
+                "teamPosition" => $listTeams->teamPosition,
+                "twitterLink" => $listTeams->twitterLink,
+                "facebookLink" => $listTeams->facebookLink,
+                "instagramLink" => $listTeams->instagramLink,
+                "linkedlnLink" => $listTeams->linkedlnLink,
+                "imagePathTeam" => env('APP_URL') . '/' . 'storage/' . $listTeams->image_path,
+            ];
+        });
+
         return [
             "services" => $listService,
             "heroTitle" => $uploadedHomeSections[0]["title"],
@@ -94,7 +110,8 @@ class WhatwedoService
             "aboutBody" => $uploadAboutSection[0]["body"],
             "aboutImagePath" => $uploadAboutSection[0]["image_path"],
             'clientsTrustedUs' => $uploadedClientssSections,
-            "testimonialSection" => $uploadTestimonialSection
+            "testimonialSection" => $uploadTestimonialSection,
+            "teamsSection" => $uploadTeamsSection
         ];
     }
 
