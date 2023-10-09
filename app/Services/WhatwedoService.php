@@ -6,6 +6,7 @@ use App\Models\AboutView;
 use App\Models\ClientsTrustedUs;
 use App\Models\HeroView;
 use App\Models\MakeService;
+use App\Models\Testimonials;
 use Illuminate\Support\Facades\DB;
 
 class WhatwedoService
@@ -72,6 +73,18 @@ class WhatwedoService
             ];
         });
 
+        $listTestimonials = Testimonials::all();
+
+        $uploadTestimonialSection = $listTestimonials->map(function ($listTestimonials) {
+            return [
+                "testimonialID" => $listTestimonials->id,
+                "nameTitle" => $listTestimonials->nameTitle,
+                "namePosition" => $listTestimonials->namePosition,
+                "nameDescription" => $listTestimonials->nameDescription,
+                "imagePathTestimonial" => env('APP_URL') . '/' . 'storage/' . $listTestimonials->image_path,
+            ];
+        });
+
         return [
             "services" => $listService,
             "heroTitle" => $uploadedHomeSections[0]["title"],
@@ -80,7 +93,8 @@ class WhatwedoService
             "aboutTitle" => $uploadAboutSection[0]["title"],
             "aboutBody" => $uploadAboutSection[0]["body"],
             "aboutImagePath" => $uploadAboutSection[0]["image_path"],
-            'clientsTrustedUs' => $uploadedClientssSections
+            'clientsTrustedUs' => $uploadedClientssSections,
+            "testimonialSection" => $uploadTestimonialSection
         ];
     }
 
@@ -105,5 +119,12 @@ class WhatwedoService
         });
 
         return $uploadedHomeSections;
+    }
+
+    public function removeClientsTruestedus(int $logoID)
+    {
+        $removeClientsTrusted = ClientsTrustedUs::where("id", $logoID)->delete();
+
+        return $removeClientsTrusted;
     }
 }
