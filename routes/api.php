@@ -3,6 +3,7 @@
 use App\Http\Controllers\AboutControlller;
 use App\Http\Controllers\HeroViewController;
 use App\Http\Controllers\MakeServiceController;
+use App\Http\Controllers\TestimonialsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -44,3 +45,9 @@ Route::post("update-about/{id}", [AboutControlller::class, "updateAboutSection"]
 Route::post("/create-clients-trustedus", [MakeServiceController::class, "createClientsTruestedus"]);
 
 Route::get("/list-clients-trustedus", [MakeServiceController::class, "listClientsTruestedus"]);
+
+Route::post("/remove-clients-trustedus/{logoID}", [MakeServiceController::class, "removeClientsTruestedus"]);
+
+Route::post("/create-testimonial", [TestimonialsController::class, "createTestimonial"]);
+
+Route::post("/remove-testimonial/{testimonialID}", [TestimonialsController::class, "removeTestimonial"]);
