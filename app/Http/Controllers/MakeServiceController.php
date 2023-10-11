@@ -26,6 +26,14 @@ class MakeServiceController extends Controller
         }
     }
 
+    /**
+     * Undocumented function
+     *
+     * @param WhatwedoServiceRequest $request
+     * @param integer $serviceID
+     * @return void
+     */
+    #[WhatwedoServiceRequest()]
     public function updateService(WhatwedoServiceRequest $request, int $serviceID)
     {
         try {
